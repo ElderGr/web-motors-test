@@ -1,7 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
 //components
 import MenuItem from "../../Components/Menu/Item";
+import CheckBox from "../../Components/Checkbox";
+import SelectComponent from "../../Components/SelectComponent";
 
 //assets
 import bike from "../../assets/Img/bike.svg";
@@ -26,7 +28,7 @@ function App(props) {
     const [selectedVersion, setSelectedVersion] = useState('');
     const [selectedPage, setSelectedPage] = useState('1');
 
-    const brandInput = useRef(null);
+    const [vehicleType, setVehicleType] = useState('cars');
 
     useEffect(() => {
         async function initialize() {
@@ -48,21 +50,27 @@ function App(props) {
 
     const handleBrand = async (e) => {
 
-        setSelectedBrand(e.target.value);
+        setSelectedBrand(e);
 
-        const response = await api.get(`/Model?MakeID=${e.target.value}`)
+        const response = await api.get(`/Model?MakeID=${e}`)
         setModels(response.data);
     }
 
     const handleModels = async (e) => {
-        setSelectedModel(e.target.value);
+        setSelectedModel(e);
 
-        const response = await api.get(`/Version?ModelID=${e.target.value}`)
+        const response = await api.get(`/Version?ModelID=${e}`)
         setVersions(response.data);
     }
 
     const handleVersions = (e) => {
-        setSelectedVersion(e.target.value);
+        setSelectedVersion(e);
+    }
+
+    const filter = () => {
+        console.log(selectedBrand)
+        console.log(selectedModel)
+        console.log(selectedVersion)
     }
 
     const clearAll = () => {
@@ -71,6 +79,7 @@ function App(props) {
         setSelectedVersion('');
         setSelectedPage('1');
     }
+
 
     return (
         <div>
@@ -86,6 +95,8 @@ function App(props) {
                             imgAlt='logo carros'
                             spanText='COMPRAR'
                             mainText='CARROS'
+                            selected={vehicleType === 'cars' ? true : false}
+                            event={() => setVehicleType('cars')}
                         />
 
                         <MenuItem
@@ -93,6 +104,8 @@ function App(props) {
                             imgAlt='logo motos'
                             spanText='COMPRAR'
                             mainText='MOTOS'
+                            selected={vehicleType === 'bike' ? true : false}
+                            event={() => setVehicleType('bike')}
                         />
                     </div>
 
@@ -101,69 +114,76 @@ function App(props) {
                     </button>
                 </nav>
             </div>
-
             <div className='filter-container'>
-                <div className='checkBox'>
-                    <input type='checkbox' />
-                    <span className='checkbox-custom'></span>
-                    <label>Novos</label>
-                </div>
-                <div>
-                    <input type='checkbox' />
-                    <label>Usados</label>
+                <div style={{ display: 'flex' }}>
+                    <CheckBox text='Novos' />
+                    <CheckBox text='Usados' />
                 </div>
 
-                <input type='text' placeholder='Onde: ' />
-                <input type='text' placeholder='Raio: ' />
+                <div style={{ display: 'flex' }}>
+                    <div style={{ width: '50%' }}>
+                        <input style={{ width: '100%' }} type='text' placeholder='Onde: ' />
+                        <input type='text' placeholder='Raio: ' />
+                        <input type='text' placeholder='Ano desejado ' />
+                        <input type='text' placeholder='Faixa de preço' />
+                    </div>
 
-                <input type='text' placeholder='Ano desejado ' />
-                <input type='text' placeholder='Faixa de preço' />
+                    <div style={{ width: '50%', padding: '0.5%', display: 'flex', justifyContent:'space-between' , flexWrap: 'wrap' }}>
 
-                <label htmlFor='selectBrand'>Marca: Todas
-                    <select id='selectBrand' onChange={handleBrand}>
-                        {brands.map(brand => (
-                            <option value={brand.ID} key={brand.ID}>
-                                {brand.Name}
-                            </option>
-                        ))}
-                    </select>
-                </label>
+                        <SelectComponent
+                            data={brands}
+                            selectedValue={() => selectedBrand ? brands.find(x => +x.ID === +selectedBrand).Name : 'Todas'}
+                            event={handleBrand}
+                            disabled={false}
+                            fixedPlaceholder='Marca:'
+                            size='50%'
+                        />
 
-                <select placeholder='Marca' disabled={selectedBrand !== '' ? false : true} onChange={handleModels}>
-                    {models.map(model => (
-                        <option value={model.ID} key={model.ID}>
-                            {model.Name}
-                        </option>
-                    ))}
-                </select>
+                        <SelectComponent
+                            data={models}
+                            selectedValue={() => selectedModel ? models.find(x => +x.ID === +selectedModel).Name : 'Todos'}
+                            event={handleModels}
+                            disabled={selectedBrand !== '' ? false : true}
+                            fixedPlaceholder='Modelo:'
+                            size='48%'
+                        />
 
-                <select disabled={selectedModel !== '' ? false : true} onChange={handleVersions}>
-                    {versions.map(version => (
-                        <option value={version.ID} key={version.ID}>
-                            {version.Name}
-                        </option>
-                    ))}
-                </select>
+                        <SelectComponent
+                            data={versions}
+                            selectedValue={() => selectedVersion ? versions.find(x => +x.ID === +selectedVersion).Name : 'Todas'}
+                            event={handleVersions}
+                            disabled={selectedModel !== '' ? false : true}
+                            fixedPlaceholder='Versão:'
+                            size='100%'
+                        />
+
+                    </div>
+                </div>
 
                 <div>
                     <button>Busca Avançada</button>
                     <button onClick={clearAll}>Limpar filtros</button>
-                    <button>Ver ofertas</button>
+                    <button className='submit-button' onClick={filter} >
+                        Ver ofertas
+                    </button>
                 </div>
             </div>
-            <div>
-                {vehicles.map(vehicle => (
-                    <div key={vehicle.ID}>
-                        <img src={vehicle.Image} alt='carro' />
 
-                        <div>Color: {vehicle.Color}</div>
-                        <div>KM: {vehicle.KM}</div>
-                        <div>Marca: {vehicle.Make}</div>
-                        <div>Modelo: {vehicle.Model}</div>
-                        <div>Preço: {vehicle.Price}</div>
-                        <div>Versão: {vehicle.Version}</div>
-                        <div>Ano de fabricação: {vehicle.YearFab}</div>
-                        <div>Ano do modelo: {vehicle.YearModel}</div>
+            <div className='result-container'>
+                {vehicles.map(vehicle => (
+                    <div className='vehicle-container' key={vehicle.ID}>
+                        <div>
+                            <img src={vehicle.Image} alt='carro' />
+                        </div>
+
+                        <div>{vehicle.Make} {vehicle.Model}</div>
+                        <div>{vehicle.Version}</div>
+                        <div>Cor: {vehicle.Color}</div>
+                        <div>R$ {vehicle.Price}</div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <div>{vehicle.YearFab}/{vehicle.YearModel}</div>
+                            <div>{vehicle.KM}</div>
+                        </div>
                     </div>
                 ))}
             </div>

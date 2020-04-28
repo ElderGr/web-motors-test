@@ -2,9 +2,9 @@ import React from "react";
 import './styles.css';
 
 
-export default function Item({ img, imgAlt, spanText, mainText }) {
+export default function Item({ img, imgAlt, spanText, mainText, selected, event }) {
     return (
-        <div className='menu-item'>
+        <div className={`menu-item ${selected ? 'active' : ''}`} onClick={event}>
             <div>
                 <img src={img} alt={imgAlt} />
             </div>

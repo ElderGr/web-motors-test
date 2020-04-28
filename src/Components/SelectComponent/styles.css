@@ -1,0 +1,46 @@
+.select-content{
+    margin: 1% 0;
+}
+
+.select-container{
+    border: 1px solid rgb(172, 172, 172);
+    padding: 0.7rem 1.5%;
+    border-radius: 2.5px;
+    cursor: pointer;
+}
+
+.select-container>span:nth-child(1){
+    color: rgb(146, 146, 146);
+    font-size: 11pt;
+}
+
+.select-container>span:nth-child(2){
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+.select-options-container{
+    border: 1px solid rgb(172, 172, 172);
+    overflow-y: scroll;
+    position: absolute;
+    width: 100%;
+    z-index: 999;
+    background: #fff;
+    max-height: 5rem
+}
+
+
+.select-options-container>div{
+    padding: 0.5% 2%;
+    cursor: pointer;
+}
+
+.select-options-container>div:hover{
+    background: rgb(194, 24, 24);
+    color: #fff;
+}
+
+.disabled{
+    opacity: 0.4;
+}
+
