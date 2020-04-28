@@ -1,0 +1,36 @@
+.menu-container{
+    background: #f4f4f4;
+}
+
+.menu-options-container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2%;
+}
+
+/* alt button */
+.alt-button{
+    padding: 0 2.5%;
+    color: rgb(241, 166, 4);
+    border: 2px solid rgb(241, 166, 4);
+    background: none;
+    font-size: 12pt;
+    font-weight: bold;
+    transition: 0.1s ease-in;
+}
+
+.alt-button:hover{
+    color: #fff;
+    background: rgb(241, 166, 4);
+}
+/* --- */
+.filter-container{
+    background: #fff;
+    margin-top: 1%;
+    padding: 2% 3%;
+}
+
+.form-control{
+    padding: 0.5% 1%;
+    
+}

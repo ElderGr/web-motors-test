@@ -1,0 +1,30 @@
+/* menu item */
+.menu-item{
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    border-bottom: 2.5px solid rgb(194, 24, 24);
+    padding: 0 3%;
+}   
+
+.menu-item>div:nth-child(1){
+    width: 50%; 
+    margin: 0 10%
+}
+
+.menu-item>div:nth-child(1)>img{
+    width: 100%; 
+    height: 100%; 
+    color: rgb(194, 24, 24)
+}
+
+.menu-item>div:nth-child(2)>span{
+    color: rgb(153, 153, 153); 
+    font-size: 10pt;
+}
+
+.menu-item>div:nth-child(2)>h2{
+    color: rgb(194, 24, 24)
+}
+
+/* ---- */
