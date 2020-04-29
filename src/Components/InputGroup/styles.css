@@ -1,0 +1,37 @@
+.main-input{
+    width: 80%;
+    margin: 1% 0;
+    border: 1px solid rgb(172, 172, 172);
+    padding: 0.6rem 1rem;
+    border-radius: 2.5px;
+    font-size: 12pt;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-input>div{
+    width: 90%;
+}
+
+.main-input>div>span:nth-child(1){
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+.main-input>div>span:nth-child(2){
+    color: rgb(146, 146, 146);
+    font-size: 12pt;
+}
+
+.main-input>svg:nth-child(1){
+    color: rgb(194, 24, 24);
+}
+
+.main-input>svg:nth-child(3){
+    color: rgb(209, 208, 208);
+}
+
+.secondary-input{
+    width: 10%;
+
+}

@@ -1,0 +1,107 @@
+.menu-container{
+    background: #f4f4f4;
+}
+
+.menu-options-container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2%;
+}
+
+/* alt button */
+.alt-button{
+    padding: 0 2.5%;
+    color: rgb(241, 166, 4);
+    border: 2px solid rgb(241, 166, 4);
+    background: none;
+    font-size: 12pt;
+    font-weight: bold;
+    transition: 0.1s ease-in;
+    height: 3rem;
+}
+
+.alt-button:hover{
+    color: #fff;
+    background: rgb(241, 166, 4);
+}
+/* --- */
+.filter-container{
+    background: #fff;
+    margin-top: 1%;
+    padding: 2% 3%;
+    border-radius: 5px;
+}
+
+.select{
+    padding: 0.5%;
+    font-size: 12pt;
+    color: rgb(167, 167, 167);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 1px solid rgb(138, 138, 138);
+}
+
+.select>select{
+    border: none;
+    width: 50%;
+    font-weight: bold;
+    font-size: 12pt;
+}
+
+/* buttons container */
+.buttons-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttons-container>div:nth-child(1), .buttons-container>div:nth-child(2){
+    display: flex;
+}
+
+/* button */
+.submit-button{
+    padding: 0.6rem 2rem;
+    border: none;
+    background-color: rgb(211, 18, 18);
+    color: #fff;
+    font-size: 14pt;
+    font-weight: bold;
+    width: 15rem;
+}
+
+.clear-button{
+    border: none;
+    background: none;
+    padding: 0 1.5rem;
+    font-weight: bold;
+    color: rgb(138, 137, 137);
+}
+
+.search-button{
+    border: none;
+    background: none;
+    padding: 0 0.5rem;
+    font-weight: bold;
+    color: rgb(211, 18, 18);
+    display: flex;
+    align-items: center;
+    font-size: 12pt;
+}
+
+/* vehicle */
+.result-container{
+    margin-top: 2%;
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.pagination-container{
+    margin: 0 2% 2% 2%;
+}
+
+.pagination-container>button{
+    padding: 0.5% 1%;
+    margin-right: 0.5%;
+}

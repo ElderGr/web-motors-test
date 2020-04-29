@@ -4,18 +4,20 @@
 
 .select-container{
     border: 1px solid rgb(172, 172, 172);
-    padding: 0.7rem 1.5%;
+    padding: 0.7rem 1rem;
     border-radius: 2.5px;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
 }
 
-.select-container>span:nth-child(1){
+.select-container>div>span:nth-child(1){
     color: rgb(146, 146, 146);
     font-size: 11pt;
 }
 
-.select-container>span:nth-child(2){
-    font-size: 12pt;
+.select-container>div>span:nth-child(2){
+    font-size: 11pt;
     font-weight: bold;
 }
 

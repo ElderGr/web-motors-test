@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 //components
 import MenuItem from "../../Components/Menu/Item";
 import CheckBox from "../../Components/Checkbox";
 import SelectComponent from "../../Components/SelectComponent";
+import InputGroup from "../../Components/InputGroup";
+import VehicleContainer from "../../Components/VehicleContainer";
 
 //assets
 import bike from "../../assets/Img/bike.svg";
@@ -15,6 +17,7 @@ import "./styles.css";
 
 //services
 import api from "../../Services/api";
+import { FaChevronRight } from 'react-icons/fa';
 
 function App(props) {
 
@@ -26,9 +29,11 @@ function App(props) {
     const [selectedBrand, setSelectedBrand] = useState('');
     const [selectedModel, setSelectedModel] = useState('');
     const [selectedVersion, setSelectedVersion] = useState('');
-    const [selectedPage, setSelectedPage] = useState('1');
-
+    const [selectedPage, setSelectedPage] = useState(1);
+   
     const [vehicleType, setVehicleType] = useState('cars');
+
+    const View = useRef(null);
 
     useEffect(() => {
         async function initialize() {
@@ -36,17 +41,48 @@ function App(props) {
             setBrands(response.data);
         }
 
+        // async function initializeVehicles() {
+        //     const response = await api.get(`/Vehicles?Page=${selectedPage}`);
+        //     setVehicles(response.data);
+        // }
+
+        document.addEventListener('scroll', handleScroll)
+
+        // initializeVehicles()
         initialize();
     }, [])
 
-    useEffect(() => {
+    useEffect(() =>{
         async function initializeVehicles() {
+            console.log('testando')
+
             const response = await api.get(`/Vehicles?Page=${selectedPage}`);
-            setVehicles(response.data);
+            let newVehicles = vehicles;
+
+            newVehicles.push(...response.data)
+            setVehicles(newVehicles);
         }
 
-        initializeVehicles();
+        initializeVehicles()
     }, [selectedPage])
+
+    const handleScroll = async () => {
+        const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+        const body = document.body;
+        const html = document.documentElement;
+        const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+        const windowBottom = windowHeight + window.pageYOffset;
+        if (windowBottom >= docHeight) {
+            setSelectedPage(selectedPage + 1)
+            // const response = await api.get(`Vehicles?Page=${selectedPage + 1}`);
+            // let existentVehicles = vehicles;
+            // console.log(vehicles)
+
+            // existentVehicles.push(...response.data);
+            // setVehicles(existentVehicles)
+        }
+    }
+
 
     const handleBrand = async (e) => {
 
@@ -77,12 +113,11 @@ function App(props) {
         setSelectedBrand('');
         setSelectedModel('');
         setSelectedVersion('');
-        setSelectedPage('1');
     }
 
 
     return (
-        <div>
+        <div onScroll={() => console.log(View)}>
             <div className='menu-container'>
 
                 <img src={logo} alt='logo webmotors' className='logo' />
@@ -121,14 +156,29 @@ function App(props) {
                 </div>
 
                 <div style={{ display: 'flex' }}>
-                    <div style={{ width: '50%' }}>
-                        <input style={{ width: '100%' }} type='text' placeholder='Onde: ' />
-                        <input type='text' placeholder='Raio: ' />
-                        <input type='text' placeholder='Ano desejado ' />
-                        <input type='text' placeholder='Faixa de preço' />
+                    <div style={{ width: '50%', padding: '0.5%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <InputGroup />
+
+                        <SelectComponent
+                            data={[]}
+                            selectedValue={() => { }}
+                            event={() => { }}
+                            disabled={true}
+                            fixedPlaceholder='Ano Desejado:'
+                            size='48%'
+                        />
+
+                        <SelectComponent
+                            data={[]}
+                            selectedValue={() => { }}
+                            event={() => { }}
+                            disabled={true}
+                            fixedPlaceholder='Faixa de preço:'
+                            size='48%'
+                        />
                     </div>
 
-                    <div style={{ width: '50%', padding: '0.5%', display: 'flex', justifyContent:'space-between' , flexWrap: 'wrap' }}>
+                    <div style={{ width: '50%', padding: '0.5%', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
 
                         <SelectComponent
                             data={brands}
@@ -160,37 +210,32 @@ function App(props) {
                     </div>
                 </div>
 
-                <div>
-                    <button>Busca Avançada</button>
-                    <button onClick={clearAll}>Limpar filtros</button>
-                    <button className='submit-button' onClick={filter} >
-                        Ver ofertas
-                    </button>
+                <div className='buttons-container'>
+                    <div>
+                        <button className='search-button'>
+                            <FaChevronRight />
+                            Busca Avançada
+                        </button>
+                    </div>
+                    <div>
+                        <button className='clear-button' onClick={clearAll}>Limpar filtros</button>
+                        <button className='submit-button' onClick={filter} >
+                            Ver ofertas
+                        </button>
+                    </div>
                 </div>
             </div>
 
             <div className='result-container'>
                 {vehicles.map(vehicle => (
-                    <div className='vehicle-container' key={vehicle.ID}>
-                        <div>
-                            <img src={vehicle.Image} alt='carro' />
-                        </div>
-
-                        <div>{vehicle.Make} {vehicle.Model}</div>
-                        <div>{vehicle.Version}</div>
-                        <div>Cor: {vehicle.Color}</div>
-                        <div>R$ {vehicle.Price}</div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <div>{vehicle.YearFab}/{vehicle.YearModel}</div>
-                            <div>{vehicle.KM}</div>
-                        </div>
-                    </div>
+                    <VehicleContainer key={vehicle.ID} vehicle={vehicle} />
                 ))}
             </div>
-            <div>
-                <button onClick={() => setSelectedPage('1')}>1</button>
+
+            <div className='pagination-container'>
+                {/* <button onClick={() => setSelectedPage('1')}>1</button>
                 <button onClick={() => setSelectedPage('2')}>2</button>
-                <button onClick={() => setSelectedPage('3')}>3</button>
+                <button onClick={() => setSelectedPage('3')}>3</button> */}
             </div>
         </div>
 
