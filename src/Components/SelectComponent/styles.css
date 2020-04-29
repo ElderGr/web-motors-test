@@ -1,5 +1,14 @@
 .select-content{
-    margin: 1% 0;
+    margin: 0.5% 0;
+    position: relative
+}
+
+.half{
+    width: 48%;
+}
+
+.stretch{
+    width: 100%;
 }
 
 .select-container{

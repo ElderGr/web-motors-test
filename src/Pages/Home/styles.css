@@ -1,11 +1,15 @@
 .menu-container{
     background: #f4f4f4;
+    display: flex;
+    flex-direction: column;
 }
 
 .menu-options-container{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin-top: 2%;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 /* alt button */
@@ -30,6 +34,26 @@
     margin-top: 1%;
     padding: 2% 3%;
     border-radius: 5px;
+    max-width: 933px;
+    max-height: 312px;
+    align-self: center;
+}
+
+.filter-container>div:nth-child(1){
+    display: flex;
+}
+
+.filter-container>div:nth-child(2){
+    display: flex;
+}
+
+.filter-container>div:nth-child(2)>div{
+    width: 50%; 
+    padding: 0.5%; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap
 }
 
 .select{
@@ -56,6 +80,7 @@
 
 .buttons-container>div:nth-child(1), .buttons-container>div:nth-child(2){
     display: flex;
+    margin-right: 0.5%;
 }
 
 /* button */
@@ -104,4 +129,33 @@
 .pagination-container>button{
     padding: 0.5% 1%;
     margin-right: 0.5%;
+}
+
+
+@media (max-width: 900px){
+    .filter-container{
+        padding: 2% 3%
+    }   
+
+    .filter-container>div:nth-child(2){
+        flex-direction: column;
+    }
+
+    .filter-container>div:nth-child(2)>div{
+        width: 100%;
+    }
+
+    .logo{
+        width: 40%;
+    }
+
+    .alt-button{
+        margin: 4% 0;
+        width: 100%;
+    }
+
+    .menu-options-container>div:nth-child(1){
+        width: 100%;
+        justify-content: center;
+    }
 }

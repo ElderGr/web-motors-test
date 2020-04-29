@@ -37,18 +37,23 @@ function App(props) {
 
     useEffect(() => {
         async function initialize() {
-            const response = await api.get('/Make');
-            setBrands(response.data);
+            try{
+                const response = await api.get('/Make');
+                setBrands(response.data);
+            }catch(err){
+                console.log(err)
+            }
+
         }
 
-        // async function initializeVehicles() {
-        //     const response = await api.get(`/Vehicles?Page=${selectedPage}`);
-        //     setVehicles(response.data);
-        // }
+        async function initializeVehicles() {
+            const response = await api.get(`/Vehicles?Page=${selectedPage}`);
+            setVehicles(response.data);
+        }
 
         document.addEventListener('scroll', handleScroll)
 
-        // initializeVehicles()
+        initializeVehicles()
         initialize();
     }, [])
 
@@ -73,7 +78,7 @@ function App(props) {
         const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
         const windowBottom = windowHeight + window.pageYOffset;
         if (windowBottom >= docHeight) {
-            setSelectedPage(selectedPage + 1)
+            // setSelectedPage(selectedPage + 1)
             // const response = await api.get(`Vehicles?Page=${selectedPage + 1}`);
             // let existentVehicles = vehicles;
             // console.log(vehicles)
@@ -117,7 +122,7 @@ function App(props) {
 
 
     return (
-        <div onScroll={() => console.log(View)}>
+        <div style={{display: 'flex', flexDirection: 'column'}} >
             <div className='menu-container'>
 
                 <img src={logo} alt='logo webmotors' className='logo' />
@@ -150,13 +155,13 @@ function App(props) {
                 </nav>
             </div>
             <div className='filter-container'>
-                <div style={{ display: 'flex' }}>
+                <div>
                     <CheckBox text='Novos' />
                     <CheckBox text='Usados' />
                 </div>
 
-                <div style={{ display: 'flex' }}>
-                    <div style={{ width: '50%', padding: '0.5%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
+                <div>
+                    <div>
                         <InputGroup />
 
                         <SelectComponent
@@ -165,7 +170,7 @@ function App(props) {
                             event={() => { }}
                             disabled={true}
                             fixedPlaceholder='Ano Desejado:'
-                            size='48%'
+                            size='half'
                         />
 
                         <SelectComponent
@@ -174,11 +179,11 @@ function App(props) {
                             event={() => { }}
                             disabled={true}
                             fixedPlaceholder='Faixa de preço:'
-                            size='48%'
+                            size='half'
                         />
                     </div>
 
-                    <div style={{ width: '50%', padding: '0.5%', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                    <div>
 
                         <SelectComponent
                             data={brands}
@@ -186,7 +191,7 @@ function App(props) {
                             event={handleBrand}
                             disabled={false}
                             fixedPlaceholder='Marca:'
-                            size='50%'
+                            size='half'
                         />
 
                         <SelectComponent
@@ -195,7 +200,7 @@ function App(props) {
                             event={handleModels}
                             disabled={selectedBrand !== '' ? false : true}
                             fixedPlaceholder='Modelo:'
-                            size='48%'
+                            size='half'
                         />
 
                         <SelectComponent
@@ -204,7 +209,7 @@ function App(props) {
                             event={handleVersions}
                             disabled={selectedModel !== '' ? false : true}
                             fixedPlaceholder='Versão:'
-                            size='100%'
+                            size='stretch'
                         />
 
                     </div>

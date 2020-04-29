@@ -7,7 +7,7 @@ import { FaMapMarkerAlt, FaTimesCircle } from "react-icons/fa";
 
 export default function InputGroup(props) {
     return (
-        <div style={{ width: '100%', display: 'flex' }}>
+        <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
             <div className='main-input'>
                 <FaMapMarkerAlt />
                 <div>
@@ -22,7 +22,7 @@ export default function InputGroup(props) {
                 event={() => { }}
                 disabled={false}
                 fixedPlaceholder='Raio: '
-                size='20%'
+                size='half'
             />
         </div>
     )

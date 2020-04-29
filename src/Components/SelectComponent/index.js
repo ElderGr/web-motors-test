@@ -9,7 +9,7 @@ export default function SelectComponent({ data, selectedValue, event, disabled, 
 
     
     return (
-        <div style={{width: size, position:'relative'}} className='select-content'>
+        <div className={`select-content ${size === 'half' ? 'half': 'stretch'}`}>
             <div disabled={disabled} className={`select-container ${disabled ? 'disabled' : ''}`} onClick={() => !disabled && setCollapse(!collapse)}>
                 <div>
                     <span>{fixedPlaceholder} </span>
